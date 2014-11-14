@@ -1,0 +1,26 @@
+create an html whiteboard
+any user drawing will appear on all connected clients
+
+design:
+    communication
+        user commands will be sent to server
+        server broadcast to all clients except the source
+        start with a simple stateless broadcast, so newly joined clients won't have history data
+        
+        use socket.io as the communication lib
+        optionally use batching, to avoid IO for each point
+    serialization
+        commands supported
+            [(start pt, end pt, color), ]. This is a peice-wise line representation. 
+                It is more costly, but the server won't need to find stroke context of incoming points
+                multiple points may be batched
+                Client side is also simplified when render receiving strokes
+            (new drawing)
+        
+    client drawing
+        coordiantes
+            need to send normalized coordiantes to server, to avoid screen sizes mismatch
+        render
+            as it receives peice-wise line, it needs to call these for every point (beginPath, moveTo, lineTo, stroke)
+            
+    
